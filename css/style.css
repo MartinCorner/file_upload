@@ -1,0 +1,122 @@
+@charset "UTF-8";
+/*
+*
+*   #22323f
+*   #313f4c
+*   #29afe4
+*   #fe4451
+*   #ff8e42
+*   #96cc2e
+*/
+
+@font-face {
+    font-family: 'CPMono_v07-Light';
+    src: url('../lib/font/CPMono_v07-Light.eot') format('embedded-opentype'), url('../lib/font/CPMono_v07-Light.woff') format('woff'), url('../lib/font/CPMono_v07-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+/*    background-color: #22323f;*/
+}
+.btn, .btn-large, .btn-flat {
+    border: none;
+    border-radius: 2px;
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    outline: 0;
+    padding: 0 2rem;
+    text-transform: uppercase;
+    vertical-align: middle;
+    -webkit-tap-highlight-color: transparent;
+}
+.btn, .btn-large {
+    text-decoration: none;
+    color: #fff;
+    background-color: #26a69a;
+    text-align: center;
+    letter-spacing: .5px;
+    transition: .2s ease-out;
+    cursor: pointer;
+}
+.animate-shadow {
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.23), 0 3px 12px rgba(0, 0, 0, 0.16);
+}
+.animate-shadow:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.22), 0 14px 56px rgba(0, 0, 0, 0.25);
+}
+.card{
+    float: left;
+    padding: 12px 24px;
+    margin: 12px 24px;
+    color: rgba(0, 0, 0, 0.870588);
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    box-sizing: border-box;
+    font-family: Roboto, sans-serif;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+/*    box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;*/
+    border-radius: 2px;
+    margin-bottom: 32px;
+    background-color: rgb(255, 255, 255);
+}
+
+.fileupload-buttonbar {
+    padding-top: 60px;
+}
+.uploader-inline{
+    position: relative;
+    width: 100%;
+/*    height: calc(16vh);*/
+    padding: 20px 0;
+    margin: 20px auto;
+    border: 2px dashed #29afe4;
+    border-radius: 11px;
+}
+.uploader-inline .upload-glyphicon{
+    font-size: 40px;
+    margin: 0 auto;
+    display: block;
+    width: 43px;
+    color: #313f4c;
+}
+.uploader-inline .upload-instructions{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.uploader-inline .drop-instructions{
+    text-align: center;
+    color: #29afe4;
+    font-family: 'CPMono_v07-Light';
+}
+.uploader-inline .fileinput-button-panel{
+    position: relative;
+    width: 155px;
+    margin: 0 auto;
+}
+.uploader-inline .fileinput-button {
+    padding: 0 2rem;
+    height: 54px;
+    line-height: 54px;
+    background-color: #313f4c;
+    color: #fff;
+    font-family: 'CPMono_v07-Light';
+}
+.uploader-inline .fileinput-button:hover {
+    color: #fff;
+}
+.fileupload-progress {
+    display: none;
+}
+.files{
+    width: auto;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.template-card {
+    width: 180px;
+    height: 240px;
+}

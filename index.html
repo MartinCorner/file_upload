@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>jQuery File Upload Demo</title>
+    <meta name="description" content="File Upload widget with multiple file selection, drag&amp;drop support, progress bars, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads and client-side image resizing. Works with any server-side platform (PHP, Python, Ruby on Rails, Java, Node.js, Go etc.) that supports standard HTML form file uploads.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+    <link rel="stylesheet" href="lib/css/jquery.fileupload.css">
+    <link rel="stylesheet" href="lib/css/jquery.fileupload-ui.css">
+    <link rel="stylesheet" href="lib/css/font-awesome.min.css">
+    <link rel="stylesheet" href="lib/css/jquery.rippleria.min.css">
+    <noscript>
+        <link rel="stylesheet" href="css/jquery.fileupload-noscript.css">
+    </noscript>
+    <noscript>
+        <link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css">
+    </noscript>
+</head>
+
+<body>
+    <div class="container">
+        <form id="fileupload" action="server" method="POST" enctype="multipart/form-data">
+            <div class="row fileupload-buttonbar">
+                <div class="uploader-inline">
+                    <i class="upload-glyphicon icon-cloud-upload" data-rippleria></i>
+                    <h2 class="upload-instructions drop-instructions">Drag &#38; Drop</h2>
+                    <p class="upload-instructions drop-instructions">or</p>
+                    <div class="fileinput-button-panel">
+                        <span class="btn btn-default btn-large fileinput-button animate-shadow">
+                            <span>Select Files</span>
+                            <input type="file" name="files[]" multiple data-rippleria>
+                        </span>
+                    </div>
+                </div>
+<!--
+                <button type="submit" class="btn btn-primary start">
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start upload</span>
+                </button>
+-->
+<!--
+                <button type="reset" class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel upload</span>
+                </button>
+-->
+<!--
+                <button type="button" class="btn btn-danger delete">
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>Delete</span>
+                </button>
+-->
+                <span class="fileupload-process"></span>
+                <div class="col-lg-5 fileupload-progress fade">
+                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                    </div>
+                    <div class="progress-extended">&nbsp;</div>
+                </div>
+            </div>
+            <div role="presentation" class="">
+                <div class="files"><div style="clear: both"></div></div>
+            </div>
+        </form>
+        <br>
+    </div>
+
+    <script id="template-upload" type="text/x-tmpl">
+        {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <div class="card animate-shadow template-card template-upload fade" data-rippleria>
+            <div>
+                <p class="name">{%=file.name%}</p>
+                <strong class="error text-danger"></strong>
+            </div>
+            <div>
+                <p class="size">Processing...</p>
+    <svg width="120" height="120">
+        <circle cx="60" cy="60" r="50" stroke-width="5" stroke="#D1D3D7" fill="none"></circle>
+        <circle cx="60" cy="60" r="50" stroke-width="5" stroke="#00A5E0" fill="none" transform="matrix(0,-1,1,0,0,120)" stroke-dasharray="0 534.0707511102648"></circle>
+    </svg>
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                </div>
+            </div>
+            <div>
+                {% if (!i && !o.options.autoUpload) { %}
+                <button class="btn btn-primary start" disabled>
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start</span>
+                </button>
+                {% } %} {% if (!i) { %}
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+                {% } %}
+            </div>
+        </div>
+        {% } %}
+    </script>
+    <!-- The template to display files available for download -->
+    <script id="template-download" type="text/x-tmpl">
+        {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <div class="card animate-shadow template-card template-download fade" data-rippleria>
+            <div>
+                <p class="name">
+                    {% if (file.url) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl? 'data-gallery': ''%}>{%=file.name%}</a> {% } else { %}
+                    <span>{%=file.name%}</span> {% } %}
+                </p>
+                {% if (file.error) { %}
+                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+                {% } %}
+            </div>
+            <div>
+                <span class="size">{%=o.formatFileSize(file.size)%}</span>
+            </div>
+            <div>
+                {% if (file.deleteUrl) { %}
+                <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}" {% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}' {% } %}>
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>Delete</span>
+                </button>
+                <input type="checkbox" name="delete" value="1" class="toggle"> {% } else { %}
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+                {% } %}
+            </div>
+        </div>
+        {% } %}
+    </script>
+    <script src="lib/js/jquery-3.1.0.min.js"></script>
+    <script src="lib/js/jquery.ui.widget.js"></script>
+    <script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="lib/js/jquery.fileupload.js"></script>
+    <script src="lib/js/jquery.fileupload-process.js"></script>
+    <script src="lib/js/jquery.fileupload-validate.js"></script>
+    <script src="lib/js/jquery.fileupload-ui.js"></script>
+    <script src="lib/js/radialIndicator.js"></script>
+    <script src="lib/js/jquery.rippleria.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
